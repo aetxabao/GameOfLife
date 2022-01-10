@@ -37,7 +37,6 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
         this.a[f][c] = 1;
     }
 
@@ -47,10 +46,11 @@ public class Gol {
      */
     public void crearAleatorios(int n) {
         for (int i = 0; i < n; i++) {
-            int f = (int) (Math.random() * this.h);
-            int c = (int) (Math.random() * this.w);
-            System.out.println(f);
-            System.out.println(c);
+            int f, c;
+            do {
+                f = (int) (Math.random() * this.h);
+                c = (int) (Math.random() * this.w);
+            } while (this.a[f][c] == 1);
             ponerVivo(f, c);
         }
     }
@@ -61,8 +61,7 @@ public class Gol {
      * @param c columna
      * @return número de celdas vecinas vivas
      */
-    public int vecinos(int f, int c) {
-        //TODO: vecinos.
+    private int vecinos(int f, int c) {
         int vecinos = 0;
         for (int fila = f - 1; fila <= f + 1; fila++) {
             for (int columna = c - 1; columna <= c + 1; columna++) {
@@ -79,10 +78,11 @@ public class Gol {
      * @return número de celdas totales vivas
      */
     public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-
-
-        return 0;
+        int count = 0;
+        for (int[] array: this.a) {
+            count += (int) Arrays.stream(array).filter(celda -> celda == 1).count();
+        }
+        return count;
     }
 
     /**
@@ -97,6 +97,9 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
+        for (int[] fila: m) {
+            Arrays.fill(fila, 0);
+        }
         //TODO: limpiar. Utiliza Arrays.fill.
     }
 
@@ -108,6 +111,7 @@ public class Gol {
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
+        this.a
         //TODO: copiar. Cuidado con los límites.
     }
 

@@ -8,7 +8,7 @@ public class Test {
         for (int i = 0; i < array.length; i++) {
             System.out.println(Arrays.toString(array[i]));
         }
-        System.out.println(gol.vecinos(0,0));
+        System.out.println(gol.quedanVivos());
 
 
 
