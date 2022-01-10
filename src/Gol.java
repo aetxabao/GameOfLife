@@ -110,7 +110,17 @@ public class Gol {
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
-        this.a
+        for (int i = f; i < this.h; i++) {
+            for (int j = c; j < this.w; j++) {
+                for (int k = 0; k < m.length; k++) {
+                    for (int l = 0; l < m[k].length; l++) {
+
+
+                    }
+                }
+            }
+        }
+        
 
         //TODO: copiar. Cuidado con los límites.
     }
