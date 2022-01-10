@@ -5,12 +5,12 @@ public class Test {
         Gol gol = new Gol(20,15);
         gol.crearAleatorios(50);
         int[][] array = gol.getSituacion();
-        for (int i = 0; i < array.length; i++) {
+        /*for (int i = 0; i < array.length; i++) {
             System.out.println(Arrays.toString(array[i]));
-        }
-        System.out.println(gol.quedanVivos());
+        }*/
 
-
+        Salida s = new Salida();
+        s.pintaShapes();
 
     }
 }

@@ -16,4 +16,5 @@ public class S {
     public final static int[][][] SHAPES = {BLOCK, BEEHIVE, LWSS, GLIDER, BLINKER, TOAD, QUINCE};
     /** Array con los nombres de las formas en el orden que aparecen en SHAPES. */
     public final static String[] NAMES = {"BLOCK", "BEEHIVE", "LWSS", "GLIDER", "BLINKER", "TOAD", "QUINCE"};
+
 }

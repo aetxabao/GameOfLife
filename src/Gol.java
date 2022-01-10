@@ -110,16 +110,17 @@ public class Gol {
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
-        for (int i = f; i < this.h; i++) {
-            for (int j = c; j < this.w; j++) {
-                for (int k = 0; k < m.length; k++) {
-                    for (int l = 0; l < m[k].length; l++) {
-                        this.a[i][j] = m[k][l];
-                    }
-                }
+
+        for (int i = f, j = 0; j < m.length; i++, j++) {
+            if (i >= this.a.length || i < 0) {
+                continue;
             }
+            if (c + m[j].length >= this.a[i].length) {
+                System.arraycopy(m[j],0, this.a[i], c, this.a[i].length - (c));
+                continue;
+            }
+            System.arraycopy(m[j],0, this.a[i], c, m[j].length);
         }
-        //TODO: copiar. Cuidado con los límites.
     }
 
     /**
@@ -128,7 +129,6 @@ public class Gol {
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        // TODO: comprobar.
         int[][] copy = Arrays.copyOf(m, m.length);
         return copy;
     }
@@ -140,8 +140,16 @@ public class Gol {
      * @return si son iguales
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
-        //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
+        if (m1.length == m2.length) {
+            int count = 0;
+            for (int i = 0; i < m1.length; i++) {
+                if (Arrays.equals(m1[i], m2[i])) {
+                    count++;
+                }
+            }
+            return (count == m1.length - 1);
+        }
+        return false;
     }
 
     /**
@@ -158,7 +166,38 @@ public class Gol {
     public void avanza() {
         int n;
         int[][] x;
-        //TODO: avanza. Utiliza limpiar y vecinos.
+        limpiar(this.b);
+
+        for (int i = 0; i < this.a.length; i++) {
+            for (int j = 0; j < this.a[i].length; j++) {
+                n = this.vecinos(i, j);
+                if (this.a[i][j] == 1) {
+                    switch (n) {
+                        case 2:
+                        case 3:
+                            this.b[i][j] = 1;
+                            break;
+                        default:
+                            this.b[i][j] = 0;
+                    }
+                } else {
+                    switch (n) {
+                        case 3:
+                            this.b[i][j] = 1;
+                            break;
+                        default:
+                            this.b[i][j] = 0;
+                    }
+                }
+
+
+
+
+            }
+        }
+        x = this.a;
+        this.a = this.b;
+        this.b = x;
     }
 
     /**
@@ -166,7 +205,7 @@ public class Gol {
      * @return si la matriz principal es igual a la secundaria
      */
     public boolean haAvanzado() {
-        return !sonIguales(a,b);
+        return !sonIguales(a, b);
     }
 
     /**
@@ -182,7 +221,11 @@ public class Gol {
     public int detectaPeriodo(int limite) {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
-        //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
+
+        for (int i = 0; i < limite; i++) {
+            avanza();
+            if ( sonIguales(m, this.a) ) { return i; }
+        }
         return p;
     }
 

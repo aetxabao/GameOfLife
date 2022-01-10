@@ -84,6 +84,24 @@ public class Salida {
      */
     public void pintaShapes(){
         //TODO: pintaShapes. Utiliza Arrays.toString
+        StringBuilder sb = new StringBuilder();
+        int longest = 0;
+        for (int i = 0; i < S.SHAPES.length; i++) {
+            sb.append(String.format("%-15s", i + ". " + S.NAMES[i]));
+            longest = Math.max(S.SHAPES[i].length, longest);
+        }
+        System.out.println(sb);
+        for (int i = 0; i < longest; i++) {
+            sb.delete(0, sb.length());
+            for (int j = 0; j < S.SHAPES.length; j++) {
+                if (i < S.SHAPES[j].length) {
+                    sb.append(String.format("%-15s", Arrays.toString(S.SHAPES[j][i])));
+                } else {
+                    sb.append(String.format("%-15s", ""));
+                }
+            }
+            System.out.println(sb);
+        }
     }
 
     /**
