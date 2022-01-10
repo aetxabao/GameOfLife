@@ -114,14 +114,11 @@ public class Gol {
             for (int j = c; j < this.w; j++) {
                 for (int k = 0; k < m.length; k++) {
                     for (int l = 0; l < m[k].length; l++) {
-
-
+                        this.a[i][j] = m[k][l];
                     }
                 }
             }
         }
-        
-
         //TODO: copiar. Cuidado con los límites.
     }
 
