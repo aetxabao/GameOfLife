@@ -154,6 +154,7 @@ public class Gol
      * @param c columna
      * @param m matriz
      */
+
     public void copiar(int f, int c, int[][] m)
     {
         //TODO: copiar. Cuidado con los límites.
