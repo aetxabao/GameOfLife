@@ -100,7 +100,6 @@ public class Gol {
         for (int[] fila: m) {
             Arrays.fill(fila, 0);
         }
-        //TODO: limpiar. Utiliza Arrays.fill.
     }
 
     /**
@@ -112,6 +111,7 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         this.a
+
         //TODO: copiar. Cuidado con los límites.
     }
 
@@ -121,8 +121,9 @@ public class Gol {
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        // TODO: comprobar.
+        int[][] copy = Arrays.copyOf(m, m.length);
+        return copy;
     }
 
     /**
