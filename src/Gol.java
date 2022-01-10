@@ -11,14 +11,16 @@ public class Gol {
     /** matriz secundaria */
     private int[][] b;
 
-
     /**
      * Inicializa los atributos h y w e instancia las matrices "a" y "b".
      * @param h es la altura (número de filas)
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        this.a = new int[h][w];
+        this.b = new int[h][w];
     }
 
     /**
@@ -26,8 +28,7 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        return this.a;
     }
 
     /**
@@ -37,6 +38,7 @@ public class Gol {
      */
     public void ponerVivo(int f, int c) {
         //TODO: ponerVivo. Asigna.
+        this.a[f][c] = 1;
     }
 
     /**
@@ -44,7 +46,13 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        for (int i = 0; i < n; i++) {
+            int f = (int) (Math.random() * this.h);
+            int c = (int) (Math.random() * this.w);
+            System.out.println(f);
+            System.out.println(c);
+            ponerVivo(f, c);
+        }
     }
 
     /**
@@ -53,9 +61,17 @@ public class Gol {
      * @param c columna
      * @return número de celdas vecinas vivas
      */
-    private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los límites.
-        return 0;
+    public int vecinos(int f, int c) {
+        //TODO: vecinos.
+        int vecinos = 0;
+        for (int fila = f - 1; fila <= f + 1; fila++) {
+            for (int columna = c - 1; columna <= c + 1; columna++) {
+                if ((fila < this.h && columna < this.w && fila > -1 && columna > -1) && !(fila == f || columna == c ) && this.a[fila][columna] == 1 ) {
+                    vecinos++;
+                }
+            }
+        }
+        return vecinos;
     }
 
     /**
@@ -64,6 +80,8 @@ public class Gol {
      */
     public int quedanVivos() {
         //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
+
+
         return 0;
     }
 
