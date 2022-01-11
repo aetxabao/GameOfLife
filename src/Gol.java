@@ -62,7 +62,6 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        // TODO: private
         int vecinos = 0;
         for (int fila = f - 1; fila <= f + 1; fila++) {
             for (int columna = c - 1; columna <= c + 1; columna++) {
