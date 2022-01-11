@@ -20,7 +20,7 @@ public class Gol {
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        //DONE: Gol. Inicializa e instancia.
         this.h = h;
         this.w = w;
         a = new int[h][w];
@@ -32,8 +32,8 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        //DONE: getSituacion. Devuelve.
+        return a;
     }
 
     /**
@@ -42,7 +42,8 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+        //DONE: ponerVivo. Asigna.
+        a[f][c] = 1;
     }
 
     /**
@@ -51,6 +52,13 @@ public class Gol {
      */
     public void crearAleatorios(int n) {
         //TODO: crearAleatorios. Utiliza ponerVivo.
+
+        for (int i = 0; i < n; i++) {
+            int x = (int)Math.random() + w;
+            int y = (int)Math.random() + h;
+            a[x][y] = 1;
+        }
+
     }
 
     /**
