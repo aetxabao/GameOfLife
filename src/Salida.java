@@ -83,7 +83,6 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
         StringBuilder sb = new StringBuilder();
         int longest = 0;
         for (int i = 0; i < S.SHAPES.length; i++) {

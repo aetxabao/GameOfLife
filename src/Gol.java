@@ -62,10 +62,14 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
+        // TODO: private
         int vecinos = 0;
         for (int fila = f - 1; fila <= f + 1; fila++) {
             for (int columna = c - 1; columna <= c + 1; columna++) {
-                if ((fila < this.h && columna < this.w && fila > -1 && columna > -1) && !(fila == f || columna == c ) && this.a[fila][columna] == 1 ) {
+                if ((fila < this.h && columna < this.w && fila > -1 && columna > -1) && this.a[fila][columna] == 1) {
+                    if (columna == c && fila == f) {
+                        continue;
+                    }
                     vecinos++;
                 }
             }
@@ -110,7 +114,6 @@ public class Gol {
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
-
         for (int i = f, j = 0; j < m.length; i++, j++) {
             if (i >= this.a.length || i < 0) {
                 continue;
@@ -171,28 +174,9 @@ public class Gol {
         for (int i = 0; i < this.a.length; i++) {
             for (int j = 0; j < this.a[i].length; j++) {
                 n = this.vecinos(i, j);
-                if (this.a[i][j] == 1) {
-                    switch (n) {
-                        case 2:
-                        case 3:
-                            this.b[i][j] = 1;
-                            break;
-                        default:
-                            this.b[i][j] = 0;
-                    }
-                } else {
-                    switch (n) {
-                        case 3:
-                            this.b[i][j] = 1;
-                            break;
-                        default:
-                            this.b[i][j] = 0;
-                    }
+                if (( this.a[i][j] == 1 && (n == 2 || n == 3)) || (this.a[i][j] == 0 && (n == 3) )) {
+                    this.b[i][j] = 1;
                 }
-
-
-
-
             }
         }
         x = this.a;
