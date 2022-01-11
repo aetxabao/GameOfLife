@@ -51,7 +51,7 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        //DONE: crearAleatorios. Utiliza ponerVivo.
 
         for (int i = 0; i < n; i++) {
             int x = (int)Math.random() + w;
@@ -69,7 +69,15 @@ public class Gol {
      */
     private int vecinos(int f, int c) {
         //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        int vivas = 0;
+        for (int i = f-1; i < f+1; i++) {
+            for (int j = c-1; j < c+1; j++) {
+                if(a[f][c] == 1){
+                    vivas++;
+                }
+            }
+        }
+        return vivas;
     }
 
     /**
