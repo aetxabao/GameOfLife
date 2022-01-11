@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Arrays;
 
 public class Gol {
@@ -19,6 +21,10 @@ public class Gol {
      */
     public Gol(int h, int w) {
         //TODO: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        a = new int[h][w];
+        b = new int[h][w];
     }
 
     /**

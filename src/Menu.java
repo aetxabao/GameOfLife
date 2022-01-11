@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Clase que gestiona la ejecución de la aplicación.
  */

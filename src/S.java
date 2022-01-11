@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Clase con formas típicas del juego de la vida. <br/>
  * http://www.it.uc3m.es/jvillena/irc/practicas/09-10/04mem.pdf <br/>
