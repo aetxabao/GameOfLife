@@ -1,0 +1,88 @@
+@startuml
+class Main {
++ {static} void main(String[])
+}
+class Salida {
++ void encabezado()
++ void menu()
++ void pinta(int[][])
++ void pintaShapes()
++ void escribe(String)
++ void fin()
+}
+class Menu {
+- Gol gol
+- int h
+- int w
+- Entrada entrada
+- Salida salida
++ <<Create>> Menu()
++ void run()
+- void inicio()
+- void gameLoop()
++ void definirDimensiones()
++ void crearCeldasAleatorias()
++ void copiarForma()
++ void limpiarTablero()
++ void avanzar()
++ void avanzarN()
++ void detectaPeriodo()
++ void contar()
+- void fin()
+}
+class S {
+- {static} int[][] BLOCK
+- {static} int[][] BEEHIVE
+- {static} int[][] LWSS
+- {static} int[][] GLIDER
+- {static} int[][] BLINKER
+- {static} int[][] TOAD
+- {static} int[][] QUINCE
++ {static} int[][][] SHAPES
++ {static} String[] NAMES
+}
+class Gol {
+- int h
+- int w
+- int[][] a
+- int[][] b
++ <<Create>> Gol(int,int)
++ int[][] getSituacion()
++ void avanza()
++ boolean haAvanzado()
++ int quedanVivos()
++ void ponerVivo(int,int)
++ void crearAleatorios(int)
++ void copiar(int,int,int[][])
+- int vecinos(int,int)
++ void limpiar()
+- void limpiar(int[][])
+- boolean sonIguales(int[][],int[][])
++ int detectaPeriodo(int)
+- int[][] copiaDe(int[][])
+}
+class E {
++ {static} int MENU
++ {static} int DEF_DIM
++ {static} int RANDOM
++ {static} int SHAPES
++ {static} int CLEAN
++ {static} int NEXT
++ {static} int N_FORWARD
++ {static} int PERIOD
++ {static} int COUNT
++ {static} int THE_END
+}
+class Entrada {
+- Scanner teclado
++ <<Create>> Entrada()
++ int leerEntero(String,int,int)
+}
+Main ..> Menu
+Menu --> Gol
+Menu --> Entrada
+Menu --> Salida
+Menu ..> E
+Salida ..> S
+Gol ..> S
+@enduml
