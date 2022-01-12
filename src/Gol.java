@@ -28,7 +28,7 @@ public class Gol
      */
     public Gol(int h, int w)
     {
-        //TODO: Gol. Inicializa e instancia.
+        //NOTESTED: Gol. Inicializa e instancia.
         this.h = h;
         this.w = w;
         a = new int[h][w];
@@ -42,7 +42,7 @@ public class Gol
      */
     public int[][] getSituacion()
     {
-        //TODO: getSituacion. Devuelve.
+        //NOTESTED: getSituacion. Devuelve.
         return a;
     }
 
@@ -53,7 +53,7 @@ public class Gol
      */
     public void ponerVivo(int f, int c)
     {
-        //TODO: ponerVivo. Asigna.
+        //NOTESTED: ponerVivo. Asigna.
         a[f][c] = 1;
     }
 
@@ -63,7 +63,7 @@ public class Gol
      */
     public void crearAleatorios(int n)
     {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        //NOTESTED: crearAleatorios. Utiliza ponerVivo.
         int x = 0;
         int y = 0;
 
@@ -83,7 +83,7 @@ public class Gol
      */
     private int vecinos(int f, int c)
     {
-        //TODO: vecinos. Cuidado con los límites.
+        //NOTESTED: vecinos. Cuidado con los límites.
         int vecinos = 0;
         boolean valida = false;
         boolean misma = false;
@@ -115,7 +115,7 @@ public class Gol
      */
     public int quedanVivos()
     {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
+        //NOTESTED: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
         int vivas = 0;
 
         for (int f = 0; f < h; f++)
@@ -140,7 +140,7 @@ public class Gol
      */
     private void limpiar(int[][] m)
     {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        //NOTESTED: limpiar. Utiliza Arrays.fill.
         for (int f = 0; f < h; f++)
         {
             Arrays.fill(m[f], 0);
@@ -157,17 +157,20 @@ public class Gol
 
     public void copiar(int f, int c, int[][] m)
     {
-        //TODO: copiar. Cuidado con los límites.
-        int x = m.length;
-        int y = m[0].length;
+        //NOTESTED: copiar. Cuidado con los límites.
+        int m_max_filas = m.length;
+        int m_max_cols = m[0].length;
+        int fila_en_m = 0;
+        int col_en_m = 0;
 
-        //!!!!!!!!!!
-
-        for (int fila = f; fila < x; fila++)
+        for (int fila_en_a = f; fila_en_a < m_max_filas; fila_en_a++, fila_en_m++)
         {
-            for (int col = c; col < y; col++)
+            for (int col_en_a = c; col_en_a < m_max_cols; col_en_a++, col_en_m++)
             {
-                a[fila][col] =
+                if(posicionValida(fila_en_a, col_en_a))
+                {
+                    a[fila_en_a][col_en_a] = m[fila_en_m][col_en_m];
+                }
             }
         }
 
@@ -180,8 +183,15 @@ public class Gol
      */
     private int[][] copiaDe(int[][] m)
     {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return Arrays.copyOf(m, m.length);
+        //NOTESTED: copiaDe. Utiliza Arrays.copyOf.
+        int[][] copia = new int[h][w];
+
+        for (int i = 0; i < h; i++)
+        {
+            copia[i] = Arrays.copyOf(m[i], w);
+        }
+
+        return copia;
     }
 
     /**
@@ -192,7 +202,7 @@ public class Gol
      */
     private boolean sonIguales(int[][] m1, int[][] m2)
     {
-        //TODO: sonIguales. Utiliza Arrays.equals.
+        //NOTESTED: sonIguales. Utiliza Arrays.equals.
         return m1.equals(m2);
     }
 
@@ -209,9 +219,9 @@ public class Gol
      */
     public void avanza()
     {
+        //NOTESTED: avanza. Utiliza limpiar y vecinos.
         int[][] x;
         int vecinos = 0;
-        //TODO: avanza. Utiliza limpiar y vecinos.
 
         limpiar(b);
 
@@ -221,31 +231,23 @@ public class Gol
             {
                 vecinos = vecinos(f,c);
 
-                if(a[f][c] == 0)    // MUERTA
+                if(a[f][c] == 0)    // SI ESTA MUERTA
                 {
                     if(vecinos == 3)
                     {
                         b[f][c] = 1;
                     }
                 }
-                // VIVA
-                else if(  vecinos == 2  ||  vecinos == 3  )
+                else if(  vecinos == 2  ||  vecinos == 3  )  // SI ESTA VIVA
                 {
                     b[f][c] = 1;
                 }
-
-                /*
-                if(  ((a[f][c] == 0) && (vecinos == 3))  ||  (vecinos == 2  ||  vecinos == 3)  )
-                {
-                    b[f][c] = 1;
-                }
-                */
             }
         }
 
-        x = copiaDe(a);
-        a = copiaDe(b);
-        b = copiaDe(x); // no entiendo muy bien porque conservar el estado pasado
+        x = a;
+        a = b;
+        b = x; // conservamos el estado anterior por eficiencia
     }
 
     /**
@@ -267,10 +269,23 @@ public class Gol
      * @return número de estados de los que consta la secuencia o
      * Integer.MAX_VALUE si no es menor que el limite
      */
-    public int detectaPeriodo(int limite) {
+    public int detectaPeriodo(int limite)
+    {
+        //NOTESTED: detectaPeriodo. Utiliza avanza y sonIguales.
         int p = Integer.MAX_VALUE;
-        int[][] m = copiaDe(a);
-        //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
+        int[][] copia = copiaDe(a);
+
+
+        for (int i = 0; i < limite; i++)
+        {
+            avanza();
+            if(sonIguales(copia, a))
+            {
+                p = i;
+            }
+        }
+
+
         return p;
     }
 

@@ -1,11 +1,16 @@
 import java.util.Arrays;
 
-public class Salida {
+public class Salida
+{
+    //TODO: pintar simbolos en vez de numeros
+    private final char CARACTER_1 = '1';
+    private final char CARACTER_0 = ' ';
 
     /**
      * Escribe el encabezado.
      */
-    public void encabezado() {
+    public void encabezado()
+    {
         System.out.println("==============================================");
         System.out.println("=          G a m e    O f    L i f e         =");
         System.out.println("==============================================");
@@ -14,7 +19,8 @@ public class Salida {
     /**
      * Escribe el menú. Sólo las opciones del 1 al 9 y la 0 para terminar.
      */
-    public void menu() {
+    public void menu()
+    {
         System.out.println("1. Imprimir el menú");              //MENU
         System.out.println("2. Definir dimensiones tablero");   //DEF_DIM
         System.out.println("3. Crear celdas aleatorias");       //RANDOM
@@ -41,31 +47,51 @@ public class Salida {
      *    |---|---|---|---|<br/>
      * @param matriz matriz de enteros con valores "0" o "1".
      */
-    public void pinta(int[][] matriz) {
+    public void pinta(int[][] matriz)
+    {
         int numFilas = matriz.length;
         int numColumnas = matriz[0].length;
+
+        // numeros de columnas
         System.out.print("    ");
-        for (int j = 0; j < numColumnas; j++) {
+        for (int j = 0; j < numColumnas; j++)
+        {
             System.out.printf(" %-2d ", j);
         }
         System.out.println();
+
+        // linea separadora incial
         System.out.print("   |");
-        for (int j = 0; j < numColumnas; j++) {
+        for (int j = 0; j < numColumnas; j++)
+        {
             System.out.print("---|");
         }
         System.out.println();
-        for (int i = 0; i < numFilas; i++) {
+
+        // filas
+        for (int i = 0; i < numFilas; i++)
+        {
+            // numero de fila
             System.out.printf("%2d |", i);
-            for (int j = 0; j < numColumnas; j++) {
-                if (matriz[i][j] == 0){
+            // por cada columna
+            for (int j = 0; j < numColumnas; j++)
+            {
+                // el valor y un espacio
+                if (matriz[i][j] == 0)
+                {
                     System.out.print("   |");
-                }else {
+                }
+                else
+                {
                     System.out.print(" 1 |");
                 }
             }
             System.out.println();
+
+            // linea separadora final
             System.out.print("   |");
-            for (int j = 0; j < numColumnas; j++) {
+            for (int j = 0; j < numColumnas; j++)
+            {
                 System.out.print("---|");
             }
             System.out.println();
@@ -82,8 +108,66 @@ public class Salida {
      *                 [0, 1, 1, 0]    [1, 0, 0, 0, 1] [1, 1, 1]                                       [1, 1, 1, 1, 1, 1, 1, 1]<br/>
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
-    public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
+    public void pintaShapes()
+    {
+        //NOTESTED pintaShapes. Utiliza Arrays.toString
+        String contenido = "";
+        int numEspacios = 0;
+        String espacios = "";
+        String linea = "";
+
+        int[] array1 = null;
+        int array1Size = 0;
+
+        for (int name = 0; name < 7; name++)
+        {
+            contenido = "" + name + ". " + S.NAMES[name];
+            numEspacios = 15 - contenido.length();
+            espacios = String.format("%" + numEspacios + "s", " ");
+            linea += contenido + espacios;
+        }
+        System.out.println(linea);
+
+        // porsiaca
+        contenido = "";
+        numEspacios = 0;
+        espacios = "";
+        linea = "";
+
+
+        for (int fila = 0; fila < 4; fila++)
+        {
+            linea = "";
+            for (int col = 0; col < 7; col++)
+            {
+                if(S.SHAPES[col].length < fila + 1)
+                {
+                    System.out.print("               ");
+                }
+                else
+                {
+                    //array1 = Arrays.copyOf(S.SHAPES[col][fila],);
+                    array1 = S.SHAPES[col][fila].clone();
+                    numEspacios = 15 - (array1.length * 3);
+                    espacios = rellenarDeEspacios(numEspacios);
+                    linea += Arrays.toString(array1) + espacios;
+                }
+            }
+            System.out.println(linea);
+        }
+
+    }
+
+    private String rellenarDeEspacios(int numEspacios)
+    {
+        String salida = "";
+
+        for (int i = 0; i < numEspacios; i++)
+        {
+            salida += " ";
+        }
+
+        return salida;
     }
 
     /**
@@ -97,7 +181,8 @@ public class Salida {
     /**
      * Escribe un mensaje final.
      */
-    public void fin() {
+    public void fin()
+    {
         System.out.println("==============================================");
         System.out.println("=   Always look on the bright side of life   =");
         System.out.println("==============================================");
