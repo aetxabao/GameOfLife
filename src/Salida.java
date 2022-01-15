@@ -1,3 +1,8 @@
+/**
+ *
+ * @author - Sergio Cobos Lorca
+ */
+
 import java.util.Arrays;
 
 public class Salida {
@@ -83,7 +88,21 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
+        //DONE: pintaShapes. Utiliza Arrays.toString
+        for (int i = 0; i < S.SHAPES.length; i++) {
+            System.out.printf("%1d. %-13s", i, S.NAMES[i]);
+        }
+        System.out.println();
+        for (int i = 0; i < S.NAMES.length; i++) {
+            for (int j = 0; j < S.SHAPES.length; j++) {
+                if (S.SHAPES[j].length <= i) {
+                    System.out.printf("%16s", "");
+                }else{
+                    System.out.printf("%-16s", Arrays.toString(S.SHAPES[j][i]));
+                }
+            }
+            System.out.println();
+        }
     }
 
     /**

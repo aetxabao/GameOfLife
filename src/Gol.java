@@ -1,3 +1,8 @@
+/**
+ *
+ * @author - Sergio Cobos Lorca
+ */
+
 import java.util.Arrays;
 
 public class Gol {
@@ -18,7 +23,11 @@ public class Gol {
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        //DONE: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        a = new int[h][w];
+        b = new int[h][w];
     }
 
     /**
@@ -26,8 +35,8 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        //DONE: getSituacion. Devuelve.
+        return a;
     }
 
     /**
@@ -36,7 +45,8 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+        //DONE: ponerVivo. Asigna.
+        a[f][c] = 1;
     }
 
     /**
@@ -44,7 +54,14 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        //DONE: crearAleatorios. Utiliza ponerVivo.
+        int fila = 0;
+        int columna = 0;
+        for (int i = 0; i < n; i++) {
+            fila = (int) (Math.random() * h);
+            columna = (int) (Math.random() * w);
+            ponerVivo(fila, columna);
+        }
     }
 
     /**
@@ -54,8 +71,16 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        //DONE: vecinos. Cuidado con los límites.
+        int contador = 0;
+        for (int i = f - 1; i < f + 2; i++) {
+            for (int j = c - 1; j < c + 2; j++) {
+                if (i >= 0 && i < h && j >= 0 && j < w && !(i == f && j == c) && a[i][j] == 1) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
     }
 
     /**
@@ -63,8 +88,16 @@ public class Gol {
      * @return número de celdas totales vivas
      */
     public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        //DONE: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
+        int contador = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if (a[i][j] == 1) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
     }
 
     /**
@@ -79,7 +112,10 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        //DONE: limpiar. Utiliza Arrays.fill.
+        for (int i = 0; i < a.length; i++) {
+            Arrays.fill(m[i], 0);
+        }
     }
 
     /**
@@ -90,7 +126,14 @@ public class Gol {
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
-        //TODO: copiar. Cuidado con los límites.
+        //DONE: copiar. Cuidado con los límites.
+        if (f >= 0 && f < a.length && c >= 0 && c < a[0].length) {
+            if (f + m.length <= a.length && c + m[0].length <= a[0].length) {
+                for (int i = 0, j = f; i < m.length; i++, j++) {
+                    System.arraycopy(m[i], 0, a[j], c, m[i].length);
+                }
+            }
+        }
     }
 
     /**
@@ -99,8 +142,8 @@ public class Gol {
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        //DONE: copiaDe. Utiliza Arrays.copyOf.
+        return Arrays.copyOf(m, m.length);
     }
 
     /**
@@ -110,8 +153,16 @@ public class Gol {
      * @return si son iguales
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
-        //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
+        //DONE: sonIguales. Utiliza Arrays.equals.
+        boolean n = true;
+        if (m1.length != m2.length) {
+            return false;
+        } else {
+            for (int i = 0; i < m1.length; i++) {
+                n = n && Arrays.equals(m1[i], m2[i]);
+            }
+            return n;
+        }
     }
 
     /**
@@ -128,7 +179,22 @@ public class Gol {
     public void avanza() {
         int n;
         int[][] x;
-        //TODO: avanza. Utiliza limpiar y vecinos.
+        //DONE: avanza. Utiliza limpiar y vecinos.
+        limpiar(b);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                n = vecinos(i, j);
+                if (a[i][j] == 0 && (n == 3)) {
+                    b[i][j] = 1;
+                }
+                if (a[i][j] == 1 && (n == 2 || n == 3)) {
+                    b[i][j] = 1;
+                }
+            }
+        }
+        x = a;
+        a = b;
+        b = x;
     }
 
     /**
@@ -152,8 +218,16 @@ public class Gol {
     public int detectaPeriodo(int limite) {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
-        //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
+        //DONE: detectaPeriodo. Utiliza avanza y sonIguales.
+        for (int i = 0; i < limite; i++) {
+            avanza();
+            if (sonIguales(m, a)) {
+                return i + 1;
+            }
+        }
+        if (!sonIguales(m, a)) {
+            a = m;
+        }
         return p;
     }
-
 }
