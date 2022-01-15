@@ -69,8 +69,8 @@ public class Gol
 
         for (int i = 0; i < n; i++)
         {
-            x = generador.nextInt() * w;
-            y = generador.nextInt() * h;
+            x = generador.nextInt(h);
+            y = generador.nextInt(w);
             ponerVivo(x, y);
         }
     }
@@ -78,7 +78,7 @@ public class Gol
     /**
      * Calcula el número de celdas vecinas vivas (no se considera así misma).
      * @param f fila
-     * @param c columna
+     * @param f columna
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c)
@@ -88,12 +88,12 @@ public class Gol
         boolean valida = false;
         boolean misma = false;
 
-        for (int x = c - 1; x < c + 1; x++)
+        for (int x = f - 1; x <= f + 1; x++)
         {
-            for (int y = f - 1; y < f + 1; y++)
+            for (int y = c - 1; y <= c + 1; y++)
             {
                 valida = posicionValida(x,y);
-                misma = (x==c && y==c);
+                misma = (x==f && y==c);
                 if(  valida  &&  !misma  &&  (a[x][y] == 1)  )
                 {
                     vecinos++;
@@ -106,7 +106,7 @@ public class Gol
 
     private boolean posicionValida(int f, int c)
     {
-        return (f >= 0 && f <= h)  &&  (c >= 0 && c <= w);
+        return (f >= 0 && f < h)  &&  (c >= 0 && c < w);
     }
 
     /**
@@ -120,7 +120,7 @@ public class Gol
 
         for (int f = 0; f < h; f++)
         {
-            vivas = (int)Arrays.stream(a[f]).count();
+            vivas += Arrays.stream(a[f]).sum();
         }
 
         return vivas;
@@ -157,15 +157,15 @@ public class Gol
 
     public void copiar(int f, int c, int[][] m)
     {
-        //NOTESTED: copiar. Cuidado con los límites.
         int m_max_filas = m.length;
         int m_max_cols = m[0].length;
         int fila_en_m = 0;
         int col_en_m = 0;
 
-        for (int fila_en_a = f; fila_en_a < m_max_filas; fila_en_a++, fila_en_m++)
+        for (int fila_en_a = f; fila_en_a < m_max_filas + f; fila_en_a++, fila_en_m++)
         {
-            for (int col_en_a = c; col_en_a < m_max_cols; col_en_a++, col_en_m++)
+            col_en_m = 0;
+            for (int col_en_a = c; col_en_a < m_max_cols + c; col_en_a++, col_en_m++)
             {
                 if(posicionValida(fila_en_a, col_en_a))
                 {
@@ -203,7 +203,30 @@ public class Gol
     private boolean sonIguales(int[][] m1, int[][] m2)
     {
         //NOTESTED: sonIguales. Utiliza Arrays.equals.
-        return m1.equals(m2);
+
+        // comprueba largo de dimension 1
+        if(m1.length != m2.length)
+        {
+            return false;
+        }
+
+        // comprueba largo dimension 2
+        if(m1[0].length != m2[0].length)
+        {
+            return false;
+        }
+
+        // comprueba que todos los arrays de
+        // dimension 2 son iguales
+        for (int f = 0; f < m1.length; f++)
+        {
+            if ( ! Arrays.equals(m1[f], m2[f]) )
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -272,21 +295,20 @@ public class Gol
     public int detectaPeriodo(int limite)
     {
         //NOTESTED: detectaPeriodo. Utiliza avanza y sonIguales.
-        int p = Integer.MAX_VALUE;
+        //int p = Integer.MAX_VALUE;
         int[][] copia = copiaDe(a);
 
 
-        for (int i = 0; i < limite; i++)
+        for (int i = 1; i <= limite; i++)
         {
             avanza();
             if(sonIguales(copia, a))
             {
-                p = i;
+                return i;
             }
         }
 
-
-        return p;
+        return limite;
     }
 
 }

@@ -110,7 +110,7 @@ public class Salida
      */
     public void pintaShapes()
     {
-        //NOTESTED pintaShapes. Utiliza Arrays.toString
+        // pintaShapes. Utiliza Arrays.toString
         String contenido = "";
         int numEspacios = 0;
         String espacios = "";
@@ -128,25 +128,18 @@ public class Salida
         }
         System.out.println(linea);
 
-        // porsiaca
-        contenido = "";
-        numEspacios = 0;
-        espacios = "";
-        linea = "";
-
-
         for (int fila = 0; fila < 4; fila++)
         {
             linea = "";
             for (int col = 0; col < 7; col++)
             {
-                if(S.SHAPES[col].length < fila + 1)
+
+                if(fila > S.SHAPES[col].length - 1)
                 {
-                    System.out.print("               ");
+                    linea += "               ";
                 }
                 else
                 {
-                    //array1 = Arrays.copyOf(S.SHAPES[col][fila],);
                     array1 = S.SHAPES[col][fila].clone();
                     numEspacios = 15 - (array1.length * 3);
                     espacios = rellenarDeEspacios(numEspacios);
