@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Clase con las constantes para gestionar las opciones del menú.
  */

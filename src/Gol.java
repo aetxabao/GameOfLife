@@ -1,10 +1,12 @@
+package src;
+import java.util.Random;
 import java.util.Arrays;
 
 public class Gol {
 
-    /** altura (nÃºmero de filas) */
+    /** altura (número de filas) */
     private int h;
-    /** ancho (nÃºmero de columnas) */
+    /** ancho (número de columnas) */
     private int w;
     /** matriz principal */
     private int[][] a;
@@ -14,20 +16,23 @@ public class Gol {
 
     /**
      * Inicializa los atributos h y w e instancia las matrices "a" y "b".
-     * @param h es la altura (nÃºmero de filas)
-     * @param w es el ancho (nÃºmero de columnas)
+     * @param h es la altura (número de filas)
+     * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        h = h;
+        w = w;
+        a = new int[h][w];
+        b = new int[h][w];
+
     }
 
     /**
-     * Devuelve la situaciÃ³n actual.
+     * Devuelve la situación actual.
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        return a;
     }
 
     /**
@@ -36,42 +41,72 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+        a[f][c] = 1;
     }
 
     /**
-     * Pone un nÃºmero de posiciones aleatorias con valor 1.
-     * @param n nÃºmero de posiciones aleatorias
+     * Pone un número de posiciones aleatorias con valor 1.
+     * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        Random random = new Random();
+        for (int i = 0; i < n; i++) {
+            int ran = random.nextInt(a.length);
+            int ran2 = random.nextInt(a[ran].length);
+            a[ran][ran2] = 1;
+        }
     }
 
     /**
-     * Calcula el nÃºmero de celdas vecinas vivas (no se considera asÃ­ misma).
+     * Calcula el número de celdas vecinas vivas (no se considera así misma).
      * @param f fila
      * @param c columna
-     * @return nÃºmero de celdas vecinas vivas
+     * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los lÃ­mites.
+        int conta = 0;
+        if(f<a.length) {
+            if(c<a[f].length) {
+                for (int i = f - 1; i < f + 1; i++) {
+                    for (int j = c - 1; j < c + 1; j++) {
+                        if (i != f && j != c) {
+                            if (a[i][j] == 1) {
+                                conta++;
+                            }
+                        }
+                    }
+                }
+                return conta;
+            }
+        }
         return 0;
     }
 
     /**
      * Cuenta todas las celdas vivas del tablero.
-     * @return nÃºmero de celdas totales vivas
+     * @return número de celdas totales vivas
      */
     public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        int conta = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if(a[i][j] ==1){
+                    conta++;
+                }
+            }
+        }
+        return conta;
     }
 
     /**
      * Limpia la matriz principal "a".
      */
     public void limpiar() {
-        limpiar(a);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                a[i][j] = 0;
+            }
+        }
     }
 
     /**
@@ -79,28 +114,29 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        Arrays.fill(m,0);
     }
 
     /**
-     * Copia en la matriz principal "a" a partir de la posiciÃ³n dada por la fila f y la columna c,
-     * los valores de la matriz "m" pasada como parÃ¡metro.
+     * Copia en la matriz principal "a" a partir de la posición dada por la fila f y la columna c,
+     * los valores de la matriz "m" pasada como parámetro.
      * @param f fila
      * @param c columna
      * @param m matriz
      */
     public void copiar(int f, int c, int[][] m) {
-        //TODO: copiar. Cuidado con los lÃ­mites.
+        //TODO: copiar. Cuidado con los límites. NO ENTIENDO LO QUE SE QUIERE HACER
     }
 
     /**
-     * Devuelve una nueva instancia con las dimensiones y los valores de la matriz pasada como parÃ¡metro.
+     * Devuelve una nueva instancia con las dimensiones y los valores de la matriz pasada como parámetro.
      * @param m matriz origen
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        int[][] c;
+        c = Arrays.copyOf(m,m.length);
+        return c;
     }
 
     /**
@@ -110,29 +146,45 @@ public class Gol {
      * @return si son iguales
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
-        //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
+        if( Arrays.equals(m1,m2)){
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Recorre todas las celdas de la matriz principal a y calcula el nÃºmero de vecinos que tiene.
-     * En base a las reglas del juego de la vida en la matriz secundaria b se establecerÃ¡ el valor
-     * que tendrÃ¡ la celda en el siguiente instante de tiempo. Tras haber recorrido todas las celdas
-     * la matriz principal debe pasar a ser la secundaria y al revÃ©s, la secundaria la principal.
+     * Recorre todas las celdas de la matriz principal a y calcula el número de vecinos que tiene.
+     * En base a las reglas del juego de la vida en la matriz secundaria b se establecerá el valor
+     * que tendrá la celda en el siguiente instante de tiempo. Tras haber recorrido todas las celdas
+     * la matriz principal debe pasar a ser la secundaria y al revés, la secundaria la principal.
      * Para ello se debe utilizar una referencia local a una matriz sin instanciar, por ejemplo "x",
      * para que cuando "a" apunte a "b" la referencia de "a" no se pierda y apuntando "b" a "x" se
      * hace el cambio. Es el mismo mecanismo para intercambiar el valor de dos variables primitivas
      * utilizando una tercera variable local. Para que en la matriz secundaria "b" se vayan haciendo
-     * los cÃ¡lculos es preciso limpiar la matriz "b" antes de empezar a recorrer las celdas.
+     * los cálculos es preciso limpiar la matriz "b" antes de empezar a recorrer las celdas.
      */
     public void avanza() {
         int n;
         int[][] x;
-        //TODO: avanza. Utiliza limpiar y vecinos.
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if(a[i][j] == 0 && vecinos(i,j)==3){
+                    b[i][j]=1;
+                }
+                if(a[i][j] == 1 && vecinos(i,j)==2 && vecinos(i,j)==3){
+                    b[i][j]=1;
+                }else{
+                    b[i][j]=0;
+                }
+            }
+        }
+        x = Arrays.copyOf(b, b.length);
+        limpiar(b);
+        a = Arrays.copyOf(x,x.length);
     }
 
     /**
-     * Comprueba si el tablero es el mismo que en la situaciÃ³n anterior despuÃ©s de avanzar.
+     * Comprueba si el tablero es el mismo que en la situación anterior después de avanzar.
      * @return si la matriz principal es igual a la secundaria
      */
     public boolean haAvanzado() {
@@ -140,13 +192,13 @@ public class Gol {
     }
 
     /**
-     * Crea una copia local de la matriz principal "a" y avanza el estado hasta un nÃºmero lÃ­mite
+     * Crea una copia local de la matriz principal "a" y avanza el estado hasta un número límite
      * de veces comprobando cada vez si la copia local es igual a la matriz principal "a".
-     * En caso de ser iguales el mÃ©todo devuelve el nÃºmero de pasos transcurridos. Si se finaliza
-     * el bucle sin encontrar el periodo se devolverÃ¡ Integer.MAX_VALUE y la matriz principal
-     * recuperarÃ¡ los valores de antes de empezar.
-     * @param limite valor mÃ¡ximo para el periodo
-     * @return nÃºmero de estados de los que consta la secuencia o
+     * En caso de ser iguales el método devuelve el número de pasos transcurridos. Si se finaliza
+     * el bucle sin encontrar el periodo se devolverá Integer.MAX_VALUE y la matriz principal
+     * recuperará los valores de antes de empezar.
+     * @param limite valor máximo para el periodo
+     * @return número de estados de los que consta la secuencia o
      * Integer.MAX_VALUE si no es menor que el limite
      */
     public int detectaPeriodo(int limite) {
