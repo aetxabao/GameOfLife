@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Arrays;
 
 public class Salida {
@@ -84,6 +86,7 @@ public class Salida {
      */
     public void pintaShapes(){
         //TODO: pintaShapes. Utiliza Arrays.toString
+
     }
 
     /**
