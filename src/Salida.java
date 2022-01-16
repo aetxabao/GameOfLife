@@ -83,7 +83,7 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
+
     }
 
     /**
