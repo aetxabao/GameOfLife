@@ -83,14 +83,31 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
+        StringBuilder cons = new StringBuilder();
+
+        for (int i = 0; i < S.SHAPES.length; i++) {
+            cons.append(String.format("%-15s", i+ " . " + S.NAMES[i]));
+
+        System.out.println(cons);
+        cons.delete(0, cons.length());
+        for (int j = 0; j < S.SHAPES.length; j++) {
+            if(i < S.SHAPES[j].length)
+            {
+                cons.append(String.format("%-15s", Arrays.toString(S.SHAPES[i][j])));
+            } else {
+                cons.append(String.format("%-15s"));
+            }
+        }
+        System.out.println(cons);
+    }
     }
 
     /**
      * Escribe un texto.
      * @param str texto
      */
-    public void escribe(String str) {
+    public void escribe(String str)
+    {
         System.out.println(str);
     }
 
