@@ -188,7 +188,7 @@ public class Gol {
      * @param limite valor máximo para el periodo
      * @return número de estados de los que consta la secuencia o
      * Integer.MAX_VALUE si no es menor que el limite
-     */
+     */ //Detectar Periodo//
     public int detectaPeriodo(int limite) {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);

@@ -84,6 +84,7 @@ public class Salida {
      */
     public void pintaShapes(){
         //TODO: pintaShapes. Utiliza Arrays.toString
+        
     }
 
     /**
