@@ -18,7 +18,11 @@ public class Gol {
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        //DONE: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        a = new int[h][w];
+        b = new int[h][w];
     }
 
     /**
@@ -26,8 +30,8 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        //DONE: getSituacion. Devuelve.
+        return a;
     }
 
     /**
@@ -36,7 +40,8 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+        //DONE: ponerVivo. Asigna.
+        b[f][c] = 1;
     }
 
     /**
@@ -44,7 +49,12 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        //DONE: crearAleatorios. Utiliza ponerVivo.
+        int randomizerF = 0;
+        int randomizerC = 0;
+
+        randomizerF = (int)Math.random()*h+1;
+        randomizerF = (int)Math.random()*w+1;
     }
 
     /**
@@ -54,8 +64,19 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        //DONE: vecinos. Cuidado con los límites.
+        int vivo = 0;
+        for (int i = f-1; i < f+1; i++) {
+            if (i != f){
+                vivo++;
+            }
+            for (int j = c-1; j < c+1; j++) {
+                if (j != c){
+                    vivo++;
+                }
+            }
+        }
+        return vivo;
     }
 
     /**
@@ -63,8 +84,16 @@ public class Gol {
      * @return número de celdas totales vivas
      */
     public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        //DONE: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
+        int vivo = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if (a[i][j] == 1){
+                    vivo++;
+                }
+            }
+        }
+        return vivo;
     }
 
     /**
@@ -79,7 +108,12 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        //DONE: limpiar. Utiliza Arrays.fill.
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[i].length; j++) {
+                m[i][j] = 0;
+            }
+        }
     }
 
     /**
@@ -91,6 +125,7 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         //TODO: copiar. Cuidado con los límites.
+        //System.arraycopy(b,b[f][c],m,m[f][c],f);
     }
 
     /**
@@ -99,8 +134,8 @@ public class Gol {
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        //DONE: copiaDe. Utiliza Arrays.copyOf.
+        return Arrays.copyOf(m,m.length);
     }
 
     /**
@@ -110,8 +145,8 @@ public class Gol {
      * @return si son iguales
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
-        //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
+        //DONE: sonIguales. Utiliza Arrays.equals.
+        return Arrays.equals(m1,m2);
     }
 
     /**
