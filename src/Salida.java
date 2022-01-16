@@ -83,7 +83,14 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
-        //TODO: pintaShapes. Utiliza Arrays.toString
+        for (int i = 0; i < S.NAMES.length; i++) {
+            System.out.printf("%15s\n",S.NAMES[i]);
+        }
+        for (int i = 0; i < S.NAMES.length; i++) {
+            for (int j = 0; j < S.SHAPES.length; j++) {
+                System.out.printf("%-16s", Arrays.toString(S.SHAPES[j][i]));
+            }
+        }
     }
 
     /**
