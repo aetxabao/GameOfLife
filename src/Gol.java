@@ -1,5 +1,12 @@
+package src;
+
 import java.util.Arrays;
 
+/**
+*
+*  @author - David Orayen
+**
+***/
 public class Gol {
 
     /** altura (número de filas) */
@@ -11,14 +18,17 @@ public class Gol {
     /** matriz secundaria */
     private int[][] b;
 
-
     /**
      * Inicializa los atributos h y w e instancia las matrices "a" y "b".
      * @param h es la altura (número de filas)
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        
+        this.h = h;
+        this.w = w;
+        a = new int[h][w];
+        b = new int[h][w];
     }
 
     /**
@@ -26,8 +36,8 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        
+        return a;
     }
 
     /**
@@ -36,7 +46,8 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+       
+        a[f][c] = 1;
     }
 
     /**
@@ -44,7 +55,14 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        
+        int f = 0;
+        int c = 0;
+        for(int i = 0; i < n; i++){
+            f = (int) (Math.random() * h);
+            c = (int) (Math.random() * h);
+            ponerVivo(f, c);
+        }
     }
 
     /**
@@ -54,8 +72,16 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        
+        int cantidad = 0;;
+        for(int i = f - 1; i < f + 2; i++){
+            for(int j = c - 1; j < c + 2; j++){
+                if(( i < this.h && j < this.w && i  >= 0 && j >= 0 && a[f][c] == 1)){
+                    cantidad++;
+                } 
+            }
+        }
+        return cantidad;
     }
 
     /**
@@ -63,15 +89,23 @@ public class Gol {
      * @return número de celdas totales vivas
      */
     public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        
+        int vivos = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if(a[i][j] == 1){
+                    vivos++;
+                }
+            }
+        }
+        return vivos;
     }
 
     /**
      * Limpia la matriz principal "a".
-     */
+      */
     public void limpiar() {
-        limpiar(a);
+        limpiar(a); 
     }
 
     /**
@@ -79,7 +113,8 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        
+        Arrays.fill(m, 0);
     }
 
     /**
@@ -91,6 +126,7 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         //TODO: copiar. Cuidado con los límites.
+        
     }
 
     /**
@@ -129,7 +165,24 @@ public class Gol {
         int n;
         int[][] x;
         //TODO: avanza. Utiliza limpiar y vecinos.
+        limpiar(b);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                n = vecinos(i, j);
+                if (a[i][j] == 0 && (n == 3)) {
+                    b[i][j] = 1;
+                }
+                
+                if (a[i][j] == 1 && (n == 2 || n == 3)) {
+                    b[i][j] = 1;
+                }
+            }
+        }
+        x = a;
+        a = b;
+        b = x;
     }
+    
 
     /**
      * Comprueba si el tablero es el mismo que en la situación anterior después de avanzar.
@@ -153,7 +206,15 @@ public class Gol {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
         //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
-        return p;
+        for(int i = 0; i < limite; i++){
+            avanza();
+            if(sonIguales(m, a)){
+                return i +1;
+            }
+            else if(!sonIguales(m, a)){
+                a = m;
+            }
+        }
+        return p;   
     }
-
 }

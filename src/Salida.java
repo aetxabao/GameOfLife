@@ -1,5 +1,11 @@
-import java.util.Arrays;
+package src;
 
+import java.util.Arrays;
+/**
+*
+*  @author - David Orayen
+**
+***/
 public class Salida {
 
     /**

@@ -1,3 +1,5 @@
+package src;
+
 /**
  * Clase principal con el método main.
  */

@@ -1,8 +1,15 @@
+package src;
+
 /**
  * Clase con formas típicas del juego de la vida. <br/>
  * http://www.it.uc3m.es/jvillena/irc/practicas/09-10/04mem.pdf <br/>
  * https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
  */
+/**
+*
+*  @author - David Orayen
+**
+***/
 public class S {
     private final static int[][] BLOCK = {{1,1},{1,1}};
     private final static int[][] BEEHIVE = {{0,1,1,0},{1,0,0,1},{0,1,1,0}};
