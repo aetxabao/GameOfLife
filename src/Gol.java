@@ -18,7 +18,11 @@ public class Gol {
      * @param w es el ancho (número de columnas)
      */
     public Gol(int h, int w) {
-        //TODO: Gol. Inicializa e instancia.
+        //DONE: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        this.a = new int[h][w];
+        this.b = new int[h][w];
     }
 
     /**
@@ -26,8 +30,8 @@ public class Gol {
      * @return la matriz principal
      */
     public int[][] getSituacion() {
-        //TODO: getSituacion. Devuelve.
-        return null;
+        //DONE: getSituacion. Devuelve.
+        return this.a;
     }
 
     /**
@@ -36,7 +40,8 @@ public class Gol {
      * @param c columna
      */
     public void ponerVivo(int f, int c) {
-        //TODO: ponerVivo. Asigna.
+        //DONE: ponerVivo. Asigna.
+        this.a[f][c] = 1;
     }
 
     /**
@@ -44,7 +49,14 @@ public class Gol {
      * @param n número de posiciones aleatorias
      */
     public void crearAleatorios(int n) {
-        //TODO: crearAleatorios. Utiliza ponerVivo.
+        //DONE: crearAleatorios. Utiliza ponerVivo.
+        for (int i = 0; i < n; i++) {
+            int f = (int)(Math.random()*this.h);
+            int c = (int)(Math.random()*this.w);
+            System.out.println(f);
+            System.out.println(c);
+            ponerVivo(f,c);
+        }
     }
 
     /**
@@ -54,18 +66,28 @@ public class Gol {
      * @return número de celdas vecinas vivas
      */
     private int vecinos(int f, int c) {
-        //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        //DONE: vecinos. Cuidado con los límites.
+        int vecinos = 0;
+        for (int fila = f; fila < f; fila++) {
+            for (int columna = c-1; columna < c+1 ; columna++) {
+                if(fila < this.h){
+                    vecinos++;
+                }
+            }
+        }
+        return vecinos;
     }
 
     /**
      * Cuenta todas las celdas vivas del tablero.
      * @return número de celdas totales vivas
      */
-    public int quedanVivos() {
-        //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
-    }
+    //POR HACER// public int quedanVivos() {
+    //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
+    //int cuenta = 0;
+    // for(int[])
+    //    }
+    //  }
 
     /**
      * Limpia la matriz principal "a".
@@ -79,7 +101,10 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        //TODO: limpiar. Utiliza Arrays.fill.
+        //DONE: limpiar. Utiliza Arrays.fill.
+        for(int[] fila: m){
+            Arrays.fill(fila,0);
+        }
     }
 
     /**
@@ -91,6 +116,11 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         //TODO: copiar. Cuidado con los límites.
+        for (int i = f; i < m.length; i++) {
+            if(i >= this.a.length || i < 0){
+                //Por resolver// return ;
+            }
+        }
     }
 
     /**
@@ -99,8 +129,9 @@ public class Gol {
      * @return copia de la matriz origen
      */
     private int[][] copiaDe(int[][] m) {
-        //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        //DONE: copiaDe. Utiliza Arrays.copyOf.
+        int[][] copia = Arrays.copyOf(m, m.length);
+        return copia;
     }
 
     /**
@@ -129,6 +160,15 @@ public class Gol {
         int n;
         int[][] x;
         //TODO: avanza. Utiliza limpiar y vecinos.
+        limpiar(this.b);
+        for (int i = 0; i < this.a.length; i++) {
+            for (int j = 0; j < this.a[i].length; j++) {
+                n = this.vecinos(i,j);
+                if(this.a[i][j] == 1){
+                    //Por hacer
+                }
+            }
+        }
     }
 
     /**
@@ -152,7 +192,13 @@ public class Gol {
     public int detectaPeriodo(int limite) {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
-        //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
+        //DONE: detectaPeriodo. Utiliza avanza y sonIguales.
+        for (int i = 0; i < limite; i++) {
+            avanza();
+            if(sonIguales(m, this.a)){
+                return i;
+            }
+        }
         return p;
     }
 
