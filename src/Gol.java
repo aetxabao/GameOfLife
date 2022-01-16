@@ -72,7 +72,7 @@ public class Gol {
         int vivas = 0;
         for (int i = f-1; i < f+1; i++) {
             for (int j = c-1; j < c+1; j++) {
-                if(a[f][c] == 1){
+                if(i != f && j != c && (a[i][j] == 1)){
                     vivas++;
                 }
             }
@@ -86,7 +86,15 @@ public class Gol {
      */
     public int quedanVivos() {
         //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        int totalVivos = 0;
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                if(a[i][j] == 1){
+                    totalVivos++;
+                }
+            }
+        }
+        return totalVivos;
     }
 
     /**
@@ -102,6 +110,7 @@ public class Gol {
      */
     private void limpiar(int[][] m) {
         //TODO: limpiar. Utiliza Arrays.fill.
+        Arrays.fill(m, 0);
     }
 
     /**
@@ -113,6 +122,15 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         //TODO: copiar. Cuidado con los límites.
+        int x = 0;
+        int y = 0;
+        for (int i = f; i < a.length; i++) {
+            for (int j = c; j < a[i].length; j++) {
+                a[i][j] = m[x][y];
+                x++;
+                y++;
+            }
+        }
     }
 
     /**
@@ -122,7 +140,7 @@ public class Gol {
      */
     private int[][] copiaDe(int[][] m) {
         //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        return Arrays.copyOf(m, m.length);
     }
 
     /**
@@ -133,7 +151,7 @@ public class Gol {
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
         //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
+        return Arrays.equals(m1, m2);
     }
 
     /**
@@ -151,6 +169,22 @@ public class Gol {
         int n;
         int[][] x;
         //TODO: avanza. Utiliza limpiar y vecinos.
+        limpiar(b);
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
+                n = vecinos(i, j);
+                if((a[i][j] == 0) && (n == 3)){
+                    b[i][j] = 1;
+                }
+                if((a[i][j] == 1) && (n < 2 || n > 3)){
+                    b[i][j] = 0;
+                }
+            }
+        }
+        x = a;
+        a = b;
+        b = x;
+
     }
 
     /**
@@ -175,6 +209,13 @@ public class Gol {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
         //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
+        for (int i = 0; i < limite; i++) {
+            avanza();
+            if ((a == m) && i != 0){
+                return i;
+            }
+        }
+        a = m;
         return p;
     }
 

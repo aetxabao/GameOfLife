@@ -3,7 +3,6 @@ package src;
 import java.util.Arrays;
 
 public class Salida {
-
     /**
      * Escribe el encabezado.
      */
@@ -85,12 +84,33 @@ public class Salida {
      *                                 [0, 1, 1, 1, 1]                                                                         <br/>
      */
     public void pintaShapes(){
+        int j = 0;
+        String sp = " ";
         //TODO: pintaShapes. Utiliza Arrays.toString
+        String[] s = src.S.NAMES;
+        int[][][] sh = src.S.SHAPES;
+        for (int i = 0; i < s.length; i++) {
+            System.out.printf("%d.%-14s",i,s[i]);
+        }
+        System.out.println();
+        for (int i = 0; i < sh.length; i++) {
+            if(sh[i][j] == null){
+                System.out.printf("%-16s",sp);
+            }else{
+                System.out.printf("%-16s",Arrays.toString(sh[i][j]));
+                if((i == sh.length - 1) && (j < sh.length )){
+                    j++;
+                    i = -1;
+                    System.out.println();
+                }
+            }
+
+        }
     }
 
     /**
      * Escribe un texto.
-     * @param str texto
+     * @param str texto 
      */
     public void escribe(String str) {
         System.out.println(str);
