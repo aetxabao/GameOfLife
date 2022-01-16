@@ -1,3 +1,5 @@
+package src;
+
 import java.util.Arrays;
 
 public class Gol {
@@ -19,6 +21,11 @@ public class Gol {
      */
     public Gol(int h, int w) {
         //TODO: Gol. Inicializa e instancia.
+        this.h = h;
+        this.w = w;
+        a = new int[h][w];
+        b = new int[h][w];
+        
     }
 
     /**
@@ -27,7 +34,7 @@ public class Gol {
      */
     public int[][] getSituacion() {
         //TODO: getSituacion. Devuelve.
-        return null;
+        return a;
     }
 
     /**
@@ -37,6 +44,7 @@ public class Gol {
      */
     public void ponerVivo(int f, int c) {
         //TODO: ponerVivo. Asigna.
+        a[f][c] = 1;
     }
 
     /**
@@ -45,6 +53,17 @@ public class Gol {
      */
     public void crearAleatorios(int n) {
         //TODO: crearAleatorios. Utiliza ponerVivo.
+        int f;
+        int c;
+        int i;
+        for ( i =0; i<n;i++){
+            f = (int) (Math.random()*h);
+            c = (int) (Math.random()*w);
+            ponerVivo(f, c);
+        }
+        
+            
+        
     }
 
     /**
@@ -55,7 +74,17 @@ public class Gol {
      */
     private int vecinos(int f, int c) {
         //TODO: vecinos. Cuidado con los límites.
-        return 0;
+        int contador = 0;
+        for (int i = f - 1; i < f + 2; i++) {
+            for (int j = c - 1; j < c + 2; j++) {
+                if (i >= 0 && i < h && j >= 0 && j < w && !(i == f && j == c) && a[i][j] == 1) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
+    
+
     }
 
     /**
@@ -64,7 +93,20 @@ public class Gol {
      */
     public int quedanVivos() {
         //TODO: quedanVivos. Utiliza si puedes Arrays.stream sino como quieras.
-        return 0;
+        
+        int contador = 0;
+        int i;
+        int j;
+        for ( i = 0;i> a.length; i++){
+            for( j = 0; j<a[i].length; i++)
+            if
+            (a[i][j] ==1){
+                contador++;
+            }
+            
+        }
+        return contador;
+        
     }
 
     /**
@@ -80,6 +122,8 @@ public class Gol {
      */
     private void limpiar(int[][] m) {
         //TODO: limpiar. Utiliza Arrays.fill.
+        for(int [] fila: m)
+        Arrays.fill(fila, 0);
     }
 
     /**
@@ -91,6 +135,13 @@ public class Gol {
      */
     public void copiar(int f, int c, int[][] m) {
         //TODO: copiar. Cuidado con los límites.
+          if (f >= 0 && f < a.length && c >= 0 && c < a[0].length) {
+            if (f + m.length <= a.length && c + m[0].length <= a[0].length) {
+                for (int i = 0, j = f; i < m.length; i++, j++) {
+                    System.arraycopy(m[i], 0, a[j], c, m[i].length);
+                }
+            }
+        }
     }
 
     /**
@@ -100,7 +151,8 @@ public class Gol {
      */
     private int[][] copiaDe(int[][] m) {
         //TODO: copiaDe. Utiliza Arrays.copyOf.
-        return null;
+        int[][] copy = Arrays.copyOf(m,m.length);
+        return copy;
     }
 
     /**
@@ -111,8 +163,22 @@ public class Gol {
      */
     private boolean sonIguales(int[][] m1, int[][] m2) {
         //TODO: sonIguales. Utiliza Arrays.equals.
-        return true;
-    }
+        int i = 1;
+        boolean b;
+        if(m1.length != m2.length){
+            return false;
+        }
+        b = Arrays.equals(m1[0], m2[0]);
+        while( i<m1.length && b){
+            b = Arrays.equals(m1[i], m2[i]);
+            i++;
+        }
+        return b;
+            
+        }
+    
+         
+    
 
     /**
      * Recorre todas las celdas de la matriz principal a y calcula el número de vecinos que tiene.
@@ -128,8 +194,29 @@ public class Gol {
     public void avanza() {
         int n;
         int[][] x;
+        limpiar(b);
         //TODO: avanza. Utiliza limpiar y vecinos.
-    }
+        for (int i =0; i< a.length; i++){
+            for (int j = 0; j<a[i].length; j++){
+                n = vecinos (i,j);
+                if(a[i][j] == 0 && (n==3)){
+                    b[i][j] = 1;
+                    
+                }else if(a[i][j] == 1&&(n==2 ||n ==3)){
+                    b[i][j] = 1;
+                }
+                
+                
+                    
+                }
+                
+            }
+            x = a;
+            a = b;
+            b = x;
+        }
+        
+    
 
     /**
      * Comprueba si el tablero es el mismo que en la situación anterior después de avanzar.
@@ -152,8 +239,21 @@ public class Gol {
     public int detectaPeriodo(int limite) {
         int p = Integer.MAX_VALUE;
         int[][] m = copiaDe(a);
+        int i;
         //TODO: detectaPeriodo. Utiliza avanza y sonIguales.
-        return p;
-    }
-
+        for (i = 0; i< limite; i++){
+            avanza();
+            if( sonIguales(a, m))
+                break;
+            }
+            
+        if( i == limite){
+            a = copiaDe(m);
+            return p;
+        }
+            
+        else
+            return i+1;
+        }
 }
+
