@@ -209,6 +209,7 @@ public class Gol {
             avanza();
             if ( sonIguales(m, this.a) ) { return i; }
         }
+        this.a = copiaDe(m);
         return p;
     }
 
