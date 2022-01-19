@@ -41,39 +41,43 @@ public class Menu {
      * Bucle en el que se le solicita al usuario una opción hasta que escribe la opción 0 de salida.
      */
     private void gameLoop() {
-        int opc = entrada.leerEntero("Opción", 0, 9);
-        while ( opc != E.THE_END ) {
-            switch(opc){
-                case E.MENU:
+        int x = entrada.leerEntero("Opción", 0, 9);
+        // forma de crear el enum con el método estático (ver código)
+        E opc =  E.fromInteger(x);
+        // observar que en el while y en los cases del switch cambia
+        while (opc != E.MENU_THE_END) {
+            switch (opc) {
+                case MENU_PRINT_MENU:
                     salida.menu();
                     break;
-                case E.DEF_DIM:
+                case MENU_DEF_DIM:
                     definirDimensiones();
                     break;
-                case E.RANDOM:
+                case MENU_RANDOM:
                     crearCeldasAleatorias();
                     break;
-                case E.SHAPES:
+                case MENU_SHAPES:
                     copiarForma();
                     break;
-                case E.CLEAN:
+                case MENU_CLEAN:
                     limpiarTablero();
                     break;
-                case E.NEXT:
+                case MENU_NEXT:
                     avanzar();
                     break;
-                case E.N_FORWARD:
+                case MENU_N_FORWARD:
                     avanzarN();
                     break;
-                case E.PERIOD:
+                case MENU_PERIOD:
                     detectaPeriodo();
                     break;
-                case E.COUNT:
+                case MENU_COUNT:
                     contar();
                     break;
                 default:
             }
-            opc = entrada.leerEntero("Opción", 0, 9);
+            x = entrada.leerEntero("Opción", 0, 9);
+            opc =  E.fromInteger(x);
         }
     }
 
