@@ -96,7 +96,7 @@ public class Gol {
      * @param m matriz
      */
     private void limpiar(int[][] m) {
-        for( int i = 0; i < b.length; i++ ){
+        for( int i = 0; i < m.length; i++ ){
             Arrays.fill( m[i], 0 );
         }
     }
